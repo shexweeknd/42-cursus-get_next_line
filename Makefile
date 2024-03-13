@@ -8,7 +8,7 @@ OBJS = $(SRC:.c=.o)
 .c.o:
 	@cc -c $(FLAGS) $(SRC)
 
-all: $(SRC)
+all: $(OBJS)
 	@cc $(FLAGS) $(OBJS) -o $(NAME) -L ./
 
 clean:
