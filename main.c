@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hramaros <hramaros@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/12 11:05:21 by hramaros          #+#    #+#             */
-/*   Updated: 2024/03/13 07:43:13 by hramaros         ###   ########.fr       */
+/*   Created: 2024/03/13 07:29:54 by hramaros          #+#    #+#             */
+/*   Updated: 2024/03/13 08:20:46 by hramaros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "get_next_line.h"
+#include <fcntl.h>
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
-# endif
+int	main(void)
+{
+	int			fd;
+	char		*buffer;
 
-# include <unistd.h>
-# include <stdio.h>
-# include <stdlib.h>
-
-char	*get_next_line(int fd);
-
-#endif
+	fd = open("testfile", O_RDONLY);
+	buffer = get_next_line(fd);
+	printf("%s", buffer);
+	buffer = get_next_line(fd);
+	printf("%s", buffer);
+	free(buffer);
+	close(fd);
+	return (0);
+}
