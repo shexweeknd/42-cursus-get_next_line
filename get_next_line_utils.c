@@ -6,7 +6,7 @@
 /*   By: hramaros <hramaros@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:05:14 by hramaros          #+#    #+#             */
-/*   Updated: 2024/03/14 07:17:30 by hramaros         ###   ########.fr       */
+/*   Updated: 2024/03/14 07:30:26 by hramaros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,27 @@ t_list	*lstnew(void *content)
 	return (buffer);
 }
 
-void	lstadd_front(t_list **lst, t_list *new)
+t_list	*lstlast(t_list *lst)
+{
+	while (lst)
+	{
+		if (lst->next == NULL)
+			break ;
+		lst = lst->next;
+	}
+	return (lst);
+}
+
+void	lstadd_back(t_list **lst, t_list *new)
 {
 	if (!new)
 		return ;
-	new->next = *lst;
-	*lst = new;
+	if (*lst == NULL)
+	{
+		*lst = new;
+		return ;
+	}
+	lstlast(*lst)->next = new;
 }
 
 void	lstclear(t_list **lst, void (*del)(void *))

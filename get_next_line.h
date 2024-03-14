@@ -6,7 +6,7 @@
 /*   By: hramaros <hramaros@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:05:21 by hramaros          #+#    #+#             */
-/*   Updated: 2024/03/14 07:17:05 by hramaros         ###   ########.fr       */
+/*   Updated: 2024/03/14 07:30:41 by hramaros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,6 @@ char	*get_next_line(int fd);
 t_list	*lstnew(void *content);
 void	lstadd_front(t_list **lst, t_list *new);
 void	lstclear(t_list **lst, void (*del)(void *));
+t_list	*lstlast(t_list *lst);
 
 #endif
