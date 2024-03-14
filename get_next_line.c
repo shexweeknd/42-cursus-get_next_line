@@ -6,7 +6,7 @@
 /*   By: hramaros <hramaros@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 07:23:17 by hramaros          #+#    #+#             */
-/*   Updated: 2024/03/14 08:07:46 by hramaros         ###   ########.fr       */
+/*   Updated: 2024/03/14 16:47:59 by hramaros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,38 @@
 
 static size_t	c_count(t_list **lst)
 {
-	size_t count;
-	
+	size_t	count;
+
 	count = 0;
 	return (count);
+}
+
+static void	fullfill(t_list **list, char *buffer)
+{
+	int		i;
+	t_list	**addr;
+	char	*tmp;
+
+	addr = list;
+	// sauvegarde des contenu dans buffer
+	i = 0;
+	while (*list->next && *list->str)
+	{
+		while (*(*list->str + i) && *(*list->str + i) != '\n')
+			*buffer++ = *(*list->str + i++);
+		*list = *list->next;
+	}
+	tmp = *list->str;
+	i = 0;
+	// TODO modify last str and create a new str to stock as the first element of the list
+	// free les elements de toute la liste
+	while (*addr->next)
+	{
+		free(*addr->str);
+		*addr = *addr->next;
+	}
+	// reinitialisation de la liste
+	return ;
 }
 
 char	*get_next_line(int fd)
@@ -40,7 +68,8 @@ char	*get_next_line(int fd)
 		lstadd_back(premier, lstnew(buffer));
 	}
 	buffer = (char *)malloc(sizeof(char) * (c_count(premier)));
-	//TODO 6
+	// TODO
+	fullfill(premier, buffer);
 	return (buffer);
 }
 
