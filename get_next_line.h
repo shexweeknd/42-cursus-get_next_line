@@ -6,7 +6,7 @@
 /*   By: hramaros <hramaros@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:05:21 by hramaros          #+#    #+#             */
-/*   Updated: 2024/03/13 07:43:13 by hramaros         ###   ########.fr       */
+/*   Updated: 2024/03/14 07:17:05 by hramaros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,21 @@
 #  define BUFFER_SIZE 42
 # endif
 
-# include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <unistd.h>
+
+typedef struct s_list liste
+{
+	char *str;
+	struct s_list *next;
+}		t_list;
 
 char	*get_next_line(int fd);
+
+/*utils*/
+t_list	*lstnew(void *content);
+void	lstadd_front(t_list **lst, t_list *new);
+void	lstclear(t_list **lst, void (*del)(void *));
 
 #endif

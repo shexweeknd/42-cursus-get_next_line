@@ -6,23 +6,18 @@
 /*   By: hramaros <hramaros@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 07:23:17 by hramaros          #+#    #+#             */
-/*   Updated: 2024/03/14 06:58:17 by hramaros         ###   ########.fr       */
+/*   Updated: 2024/03/14 07:19:46 by hramaros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static char	read_char(int fd)
-{
-	char	c;
-
-	read(fd, &c, 1);
-	return (c);
-}
-
 char	*get_next_line(int fd)
 {
+	static t_list **premier;
+
 	
+	return ;
 }
 
 
