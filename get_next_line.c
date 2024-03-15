@@ -6,7 +6,7 @@
 /*   By: hramaros <hramaros@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 07:23:17 by hramaros          #+#    #+#             */
-/*   Updated: 2024/03/14 16:47:59 by hramaros         ###   ########.fr       */
+/*   Updated: 2024/03/15 07:48:37 by hramaros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,22 @@ static size_t	c_count(t_list **lst)
 	size_t	count;
 
 	count = 0;
+	while (*lst)
+	{
+		while (*lst->str[count] && *lst->str[count] != '\n')
+			count++;
+		*lst = *lst->next;
+	}
+	return (count);
+}
+
+static size_t	strlen(const char *s)
+{
+	int	count;
+
+	count = 0;
+	while (s[count])
+		count++;
 	return (count);
 }
 
@@ -25,19 +41,31 @@ static void	fullfill(t_list **list, char *buffer)
 	int		i;
 	t_list	**addr;
 	char	*tmp;
+	size_t	tmp_size;
 
 	addr = list;
-	// sauvegarde des contenu dans buffer
 	i = 0;
+	// sauvegarde des contenu sauf le dernier str dans le buffer
 	while (*list->next && *list->str)
 	{
-		while (*(*list->str + i) && *(*list->str + i) != '\n')
-			*buffer++ = *(*list->str + i++);
+		j = 0;
+		while (*lst->str[j] != '\n')
+			*lst->str[j++] = buffer[i++];
+		if (*lst->str[j++] == '\n')
+		{
+			buffer[i + 1] = '\n';
+			break ;
+		}
 		*list = *list->next;
 	}
-	tmp = *list->str;
+	// modify last str and create a new str to stock as the first element of the list
+	tmp = (char *)malloc(strlen(&(*lst->str[j]) + 1));
+	if (!tmp)
+		return ;
+	tmp[strlen(&(*lst->str[j]))] = '\0';
 	i = 0;
-	// TODO modify last str and create a new str to stock as the first element of the list
+	while (*lst->str[j])
+		tmp[i++] = *lst->str[j++];
 	// free les elements de toute la liste
 	while (*addr->next)
 	{
@@ -45,7 +73,7 @@ static void	fullfill(t_list **list, char *buffer)
 		*addr = *addr->next;
 	}
 	// reinitialisation de la liste
-	return ;
+	lstadd_back(lst, lstnew(tmp));
 }
 
 char	*get_next_line(int fd)
@@ -68,7 +96,7 @@ char	*get_next_line(int fd)
 		lstadd_back(premier, lstnew(buffer));
 	}
 	buffer = (char *)malloc(sizeof(char) * (c_count(premier)));
-	// TODO
+	buffer[c_count(premier)] = '\n';
 	fullfill(premier, buffer);
 	return (buffer);
 }
