@@ -6,7 +6,7 @@
 /*   By: hramaros <hramaros@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:05:14 by hramaros          #+#    #+#             */
-/*   Updated: 2024/03/16 14:20:38 by hramaros         ###   ########.fr       */
+/*   Updated: 2024/03/16 14:21:07 by hramaros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,21 @@ void	lstadd_back(t_list **lst, t_list *new)
 		return ;
 	}
 	lstlast(*lst)->next = new;
+}
+
+char	*create_tmp(t_list *lst, int j, size_t size)
+{
+	char	*tmp;
+	int		i;
+
+	tmp = (char *)malloc(sizeof(char) * (size + 1));
+	if (!tmp)
+		return (NULL);
+	tmp[size] = '\0';
+	i = 0;
+	while (lst->str[j])
+		tmp[i++] = lst->str[++j];
+	return (tmp);
 }
 
 void	recurse_free(t_list *addr)
