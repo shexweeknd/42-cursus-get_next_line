@@ -6,29 +6,29 @@
 /*   By: hramaros <hramaros@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 07:23:17 by hramaros          #+#    #+#             */
-/*   Updated: 2024/03/16 07:46:35 by hramaros         ###   ########.fr       */
+/*   Updated: 2024/03/16 08:10:00 by hramaros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static size_t	c_count(t_list **lst)
+static size_t	c_count(t_list *lst)
 {
 	size_t	count;
 
 	count = 0;
-	while (*lst)
+	while (lst)
 	{
-		while ((*lst)->str[count] && (*lst)->str[count] != '\n')
+		while (lst->str[count] && lst->str[count] != '\n')
 			count++;
-		*lst = (*lst)->next;
+		lst = lst->next;
 	}
 	return (count);
 }
 
 static int	is_nl(char *str)
 {
-	while (*str++)
+	while (*str)
 		if (*str++ == '\n')
 			return (1);
 	return (0);
@@ -88,7 +88,7 @@ static void	fullfill(t_list **lst, char *buffer)
 
 char	*get_next_line(int fd)
 {
-	static t_list	**premier;
+	static t_list	*premier;
 	char			*tmp;
 	char			*buffer;
 
@@ -98,16 +98,17 @@ char	*get_next_line(int fd)
 	if (!premier)
 	{
 		read(fd, tmp, BUFFER_SIZE);
-		lstadd_back(premier, lstnew(tmp));
+		premier = lstnew(tmp);
 	}
 	while (!is_nl(tmp))
 	{
 		read(fd, tmp, BUFFER_SIZE);
-		lstadd_back(premier, lstnew(tmp));
+		lstadd_back(&premier, lstnew(tmp));
 	}
-	buffer = (char *)malloc(sizeof(char) * (c_count(premier)));
-	buffer[c_count(premier)] = '\n';
-	fullfill(premier, buffer);
+	free(tmp);
+	buffer = (char *)malloc(sizeof(char) * (c_count(&premier)));
+	buffer[c_count(&premier)] = '\n';
+	fullfill(&premier, buffer);
 	return (buffer);
 }
 
