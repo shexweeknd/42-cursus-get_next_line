@@ -6,7 +6,7 @@
 /*   By: hramaros <hramaros@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:05:14 by hramaros          #+#    #+#             */
-/*   Updated: 2024/03/15 07:35:45 by hramaros         ###   ########.fr       */
+/*   Updated: 2024/03/16 07:44:10 by hramaros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_list	*lstnew(void *content)
 	buffer = (t_list *)malloc(sizeof(t_list));
 	if (!buffer)
 		return (NULL);
-	buffer->content = content;
+	buffer->str = content;
 	buffer->next = NULL;
 	return (buffer);
 }
@@ -52,7 +52,7 @@ void	lstclear(t_list **lst, void (*del)(void *))
 	if (*lst == NULL)
 		return ;
 	lstclear(&(*lst)->next, del);
-	(*del)((*lst)->content);
+	(*del)((*lst)->str);
 	free(*lst);
 	*lst = NULL;
 }
