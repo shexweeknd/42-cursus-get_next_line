@@ -6,13 +6,13 @@
 /*   By: hramaros <hramaros@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:05:14 by hramaros          #+#    #+#             */
-/*   Updated: 2024/03/16 08:06:55 by hramaros         ###   ########.fr       */
+/*   Updated: 2024/03/16 13:18:28 by hramaros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static char	*strdup(const char *s)
+char	*strdup(const char *s)
 {
 	char	*ret;
 	int		size;
@@ -68,12 +68,14 @@ void	lstadd_back(t_list **lst, t_list *new)
 	lstlast(*lst)->next = new;
 }
 
-void	lstclear(t_list **lst, void (*del)(void *))
+void recurse_free(t_list *addr)
 {
-	if (*lst == NULL)
+	free(addr->str);
+	if (!addr->next)
+	{
+		free(addr);
 		return ;
-	lstclear(&(*lst)->next, del);
-	(*del)((*lst)->str);
-	free(*lst);
-	*lst = NULL;
+	}
+	recurse_free(addr->next);
+	free(addr);
 }

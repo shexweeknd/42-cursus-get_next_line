@@ -6,7 +6,7 @@
 /*   By: hramaros <hramaros@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:05:21 by hramaros          #+#    #+#             */
-/*   Updated: 2024/03/16 07:42:57 by hramaros         ###   ########.fr       */
+/*   Updated: 2024/03/16 13:19:07 by hramaros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ char				*get_next_line(int fd);
 /*utils*/
 t_list				*lstnew(void *content);
 void				lstadd_back(t_list **lst, t_list *new);
-void				lstclear(t_list **lst, void (*del)(void *));
+void				recurse_free(t_list *addr);
 t_list				*lstlast(t_list *lst);
+char				*strdup(const char *s);
 
 #endif
