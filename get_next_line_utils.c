@@ -6,7 +6,7 @@
 /*   By: hramaros <hramaros@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:05:14 by hramaros          #+#    #+#             */
-/*   Updated: 2024/03/16 13:18:28 by hramaros         ###   ########.fr       */
+/*   Updated: 2024/03/16 14:20:38 by hramaros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	lstadd_back(t_list **lst, t_list *new)
 	lstlast(*lst)->next = new;
 }
 
-void recurse_free(t_list *addr)
+void	recurse_free(t_list *addr)
 {
 	free(addr->str);
 	if (!addr->next)
