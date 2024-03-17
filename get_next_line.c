@@ -6,7 +6,7 @@
 /*   By: hramaros <hramaros@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 07:23:17 by hramaros          #+#    #+#             */
-/*   Updated: 2024/03/16 14:23:19 by hramaros         ###   ########.fr       */
+/*   Updated: 2024/03/17 08:16:06 by hramaros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,15 +66,7 @@ static void	fullfill(t_list *lst, char *buffer)
 		lst = lst->next;
 	}
 	if (lst->str[j] == '\n')
-	{
-		tmp = (char *)malloc(sizeof(char) * (strlen(&lst->str[j + 1]) + 1));
-		if (!tmp)
-			return ;
-		tmp[strlen(&(lst->str[j + 1]))] = '\0';
-		i = 0;
-		while (lst->str[j])
-			tmp[i++] = lst->str[++j];
-	}
+		tmp = create_tmp(lst, j, strlen(&lst->str[j + 1]));
 	else
 		tmp = "";
 	recurse_free(addr);
@@ -98,7 +90,7 @@ char	*get_next_line(int fd)
 		premier = lstnew(tmp);
 	}
 	while (!is_nl(tmp) && read(fd, tmp, BUFFER_SIZE) != 0)
-		lstadd_back(&premier, lstnew(tmp));
+		lstlast(premier)->next = lstnew(tmp);
 	free(tmp);
 	buffer = (char *)malloc(sizeof(char) * (c_count(premier) + 2));
 	buffer[c_count(premier)] = '\n';

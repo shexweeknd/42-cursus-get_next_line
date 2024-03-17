@@ -6,7 +6,7 @@
 /*   By: hramaros <hramaros@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:05:14 by hramaros          #+#    #+#             */
-/*   Updated: 2024/03/16 14:21:07 by hramaros         ###   ########.fr       */
+/*   Updated: 2024/03/17 08:16:58 by hramaros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,18 +54,6 @@ t_list	*lstlast(t_list *lst)
 		lst = lst->next;
 	}
 	return (lst);
-}
-
-void	lstadd_back(t_list **lst, t_list *new)
-{
-	if (!new)
-		return ;
-	if (*lst == NULL)
-	{
-		*lst = new;
-		return ;
-	}
-	lstlast(*lst)->next = new;
 }
 
 char	*create_tmp(t_list *lst, int j, size_t size)
