@@ -6,7 +6,7 @@
 /*   By: hramaros <hramaros@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 07:23:17 by hramaros          #+#    #+#             */
-/*   Updated: 2024/03/17 10:43:50 by hramaros         ###   ########.fr       */
+/*   Updated: 2024/03/17 10:44:47 by hramaros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static void	fullfill(t_list **lst_ptr, t_list *premier, char *buffer)
 char	*get_next_line(int fd)
 {
 	static t_list	**lst_ptr;
-	t_list	*premier;
+	t_list			*premier;
 	char			*tmp;
 	char			*buffer;
 
