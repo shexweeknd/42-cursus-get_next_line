@@ -6,13 +6,13 @@
 /*   By: hramaros <hramaros@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:05:14 by hramaros          #+#    #+#             */
-/*   Updated: 2024/03/17 08:16:58 by hramaros         ###   ########.fr       */
+/*   Updated: 2024/03/17 09:59:20 by hramaros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*strdup(const char *s)
+char	*duplicate(const char *s)
 {
 	char	*ret;
 	int		size;
@@ -40,7 +40,7 @@ t_list	*lstnew(void *content)
 	buffer = (t_list *)malloc(sizeof(t_list));
 	if (!buffer)
 		return (NULL);
-	buffer->str = strdup(content);
+	buffer->str = duplicate(content);
 	buffer->next = NULL;
 	return (buffer);
 }
@@ -80,5 +80,6 @@ void	recurse_free(t_list *addr)
 		return ;
 	}
 	recurse_free(addr->next);
+	addr->next = NULL;
 	free(addr);
 }

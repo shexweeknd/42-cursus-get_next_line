@@ -6,7 +6,7 @@
 /*   By: hramaros <hramaros@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:05:21 by hramaros          #+#    #+#             */
-/*   Updated: 2024/03/17 08:16:23 by hramaros         ###   ########.fr       */
+/*   Updated: 2024/03/17 08:33:12 by hramaros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_list				*lstnew(void *content);
 void				lstadd_back(t_list **lst, t_list *new);
 void				recurse_free(t_list *addr);
 t_list				*lstlast(t_list *lst);
-char				*strdup(const char *s);
+char				*duplicate(const char *s);
 char				*create_tmp(t_list *lst, int j, size_t size);
 
 #endif
