@@ -6,7 +6,7 @@
 /*   By: hramaros <hramaros@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:05:21 by hramaros          #+#    #+#             */
-/*   Updated: 2024/03/17 08:33:12 by hramaros         ###   ########.fr       */
+/*   Updated: 2024/03/18 08:12:00 by hramaros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ char				*get_next_line(int fd);
 
 /*utils*/
 t_list				*lstnew(void *content);
+int				bezero(char *str);
 void				lstadd_back(t_list **lst, t_list *new);
 void				recurse_free(t_list *addr);
 t_list				*lstlast(t_list *lst);

@@ -6,7 +6,7 @@
 /*   By: hramaros <hramaros@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 07:23:17 by hramaros          #+#    #+#             */
-/*   Updated: 2024/03/18 03:37:53 by hramaros         ###   ########.fr       */
+/*   Updated: 2024/03/18 08:11:29 by hramaros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ static size_t	c_count(t_list *lst)
 
 static int	nl_number(char *str)
 {
-	int occur;
-	
+	int	occur;
+
 	occur = 0;
 	while (*str)
 		if (*str++ == '\n')
@@ -50,7 +50,8 @@ static size_t	strlen(const char *s)
 	return (count);
 }
 
-static void	fullfill(t_list **lst_ptr, t_list *premier, char *buffer, int nl_occ)
+static void	fullfill(t_list **lst_ptr, t_list *premier, char *buffer,
+		int nl_occ)
 {
 	int		i;
 	int		j;
@@ -65,16 +66,14 @@ static void	fullfill(t_list **lst_ptr, t_list *premier, char *buffer, int nl_occ
 		while (premier->str[j])
 		{
 			buffer[i++] = premier->str[j];
-			if (premier->str[j++] == '\n' && (nl_occ-- <= 0))
+			if (premier->str[j++] == '\n' && (--nl_occ <= 0))
 				break ;
 		}
 		if (!premier->next)
 			break ;
 		premier = premier->next;
 	}
-	if (buffer[i] != '\n')
-		buffer[++i] = '\n';
-	if (strlen(&premier->str[j]) > 1)
+	if (strlen(&premier->str[j]) >= 1)
 		tmp = create_tmp(premier, j, strlen(&premier->str[j]));
 	else
 		tmp = "";
@@ -97,14 +96,14 @@ char	*get_next_line(int fd)
 	tmp = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!tmp)
 		return (NULL);
-	tmp[BUFFER_SIZE] = '\0';
+	bezero(tmp);
 	if (!lst_ptr || *lst_ptr == NULL)
 	{
 		read(fd, tmp, BUFFER_SIZE);
 		premier = lstnew(tmp);
 		lst_ptr = &(premier);
 	}
-	while ((nl_number(tmp) == 0) && read(fd, tmp, BUFFER_SIZE) != 0)
+	while ((nl_number(tmp) == 0) && bezero(tmp) && read(fd, tmp, BUFFER_SIZE) != 0)
 		lstlast(*lst_ptr)->next = lstnew(tmp);
 	free(tmp);
 	buffer = (char *)malloc(sizeof(char) * (c_count(premier) + 2));
@@ -113,3 +112,5 @@ char	*get_next_line(int fd)
 	fullfill(lst_ptr, premier, buffer, nl_number(lstlast(premier)->str));
 	return (buffer);
 }
+
+// TODO rectifier la taille de tmp a la valeur de retour de read() (tmp[read(...)] = '\0')
