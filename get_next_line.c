@@ -6,7 +6,7 @@
 /*   By: hramaros <hramaros@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 07:23:17 by hramaros          #+#    #+#             */
-/*   Updated: 2024/03/17 10:44:47 by hramaros         ###   ########.fr       */
+/*   Updated: 2024/03/18 03:37:53 by hramaros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,15 @@ static size_t	c_count(t_list *lst)
 	return (count);
 }
 
-static int	is_nl(char *str)
+static int	nl_number(char *str)
 {
+	int occur;
+	
+	occur = 0;
 	while (*str)
 		if (*str++ == '\n')
-			return (1);
-	return (0);
+			occur++;
+	return (occur);
 }
 
 static size_t	strlen(const char *s)
@@ -47,7 +50,7 @@ static size_t	strlen(const char *s)
 	return (count);
 }
 
-static void	fullfill(t_list **lst_ptr, t_list *premier, char *buffer)
+static void	fullfill(t_list **lst_ptr, t_list *premier, char *buffer, int nl_occ)
 {
 	int		i;
 	int		j;
@@ -59,14 +62,20 @@ static void	fullfill(t_list **lst_ptr, t_list *premier, char *buffer)
 	while (premier && premier->str)
 	{
 		j = 0;
-		while (premier->str[j] && premier->str[j] != '\n')
-			buffer[i++] = premier->str[j++];
-		if ((premier->str[j] == '\n') || (!premier->next))
+		while (premier->str[j])
+		{
+			buffer[i++] = premier->str[j];
+			if (premier->str[j++] == '\n' && (nl_occ-- <= 0))
+				break ;
+		}
+		if (!premier->next)
 			break ;
 		premier = premier->next;
 	}
-	if (premier->str[j] == '\n' && (strlen(&premier->str[j]) > 1))
-		tmp = create_tmp(premier, j, strlen(&premier->str[j + 1]));
+	if (buffer[i] != '\n')
+		buffer[++i] = '\n';
+	if (strlen(&premier->str[j]) > 1)
+		tmp = create_tmp(premier, j, strlen(&premier->str[j]));
 	else
 		tmp = "";
 	recurse_free(addr);
@@ -95,12 +104,12 @@ char	*get_next_line(int fd)
 		premier = lstnew(tmp);
 		lst_ptr = &(premier);
 	}
-	while (!is_nl(tmp) && read(fd, tmp, BUFFER_SIZE) != 0)
+	while ((nl_number(tmp) == 0) && read(fd, tmp, BUFFER_SIZE) != 0)
 		lstlast(*lst_ptr)->next = lstnew(tmp);
 	free(tmp);
 	buffer = (char *)malloc(sizeof(char) * (c_count(premier) + 2));
 	buffer[c_count(premier)] = '\n';
 	buffer[c_count(premier) + 1] = '\0';
-	fullfill(lst_ptr, premier, buffer);
+	fullfill(lst_ptr, premier, buffer, nl_number(lstlast(premier)->str));
 	return (buffer);
 }

@@ -6,7 +6,7 @@
 /*   By: hramaros <hramaros@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:05:14 by hramaros          #+#    #+#             */
-/*   Updated: 2024/03/17 09:59:20 by hramaros         ###   ########.fr       */
+/*   Updated: 2024/03/18 03:19:14 by hramaros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ char	*create_tmp(t_list *lst, int j, size_t size)
 	tmp[size] = '\0';
 	i = 0;
 	while (lst->str[j])
-		tmp[i++] = lst->str[++j];
+		tmp[i++] = lst->str[j++];
 	return (tmp);
 }
 
