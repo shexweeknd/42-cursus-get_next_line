@@ -6,7 +6,7 @@
 /*   By: hramaros <hramaros@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 07:23:17 by hramaros          #+#    #+#             */
-/*   Updated: 2024/03/18 08:11:29 by hramaros         ###   ########.fr       */
+/*   Updated: 2024/03/18 08:16:12 by hramaros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,8 @@ char	*get_next_line(int fd)
 		premier = lstnew(tmp);
 		lst_ptr = &(premier);
 	}
-	while ((nl_number(tmp) == 0) && bezero(tmp) && read(fd, tmp, BUFFER_SIZE) != 0)
+	while ((nl_number(tmp) == 0) && bezero(tmp) && read(fd, tmp,
+			BUFFER_SIZE) != 0)
 		lstlast(*lst_ptr)->next = lstnew(tmp);
 	free(tmp);
 	buffer = (char *)malloc(sizeof(char) * (c_count(premier) + 2));
@@ -113,4 +114,5 @@ char	*get_next_line(int fd)
 	return (buffer);
 }
 
-// TODO rectifier la taille de tmp a la valeur de retour de read() (tmp[read(...)] = '\0')
+// rectifier la taille de tmp a la valeur de retour de read() (tmp[read(...)] = '\0')
+// TODO rectifier erreur : "vao pair de tsy mety ny algo de vao pair vao mety le algo"
