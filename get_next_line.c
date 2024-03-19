@@ -6,7 +6,7 @@
 /*   By: hramaros <hramaros@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 07:23:17 by hramaros          #+#    #+#             */
-/*   Updated: 2024/03/19 07:30:34 by hramaros         ###   ########.fr       */
+/*   Updated: 2024/03/19 18:20:08 by hramaros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static void	fullfill(t_list **lst_ptr, t_list *premier, char *buffer)
 		tmp = "";
 	recurse_free(addr);
 	if (*tmp)
-		addr = lstnew(tmp);
+		*lst_ptr = lstnew(tmp);
 	else
 		*lst_ptr = NULL;
 }
