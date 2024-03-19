@@ -6,7 +6,7 @@
 /*   By: hramaros <hramaros@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:05:14 by hramaros          #+#    #+#             */
-/*   Updated: 2024/03/18 08:11:49 by hramaros         ###   ########.fr       */
+/*   Updated: 2024/03/19 07:31:14 by hramaros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,14 @@ char	*duplicate(const char *s)
 	return (ret);
 }
 
-int	bezero(char *str)
+int	bezero(char *str, size_t size)
 {
-	int	i;
+	size_t	i;
 
 	if (!str)
 		return (0);
 	i = 0;
-	while (i <= BUFFER_SIZE)
+	while (i <= size)
 		str[i++] = '\0';
 	return (1);
 }

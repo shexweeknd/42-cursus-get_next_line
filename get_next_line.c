@@ -6,7 +6,7 @@
 /*   By: hramaros <hramaros@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 07:23:17 by hramaros          #+#    #+#             */
-/*   Updated: 2024/03/19 07:24:54 by hramaros         ###   ########.fr       */
+/*   Updated: 2024/03/19 07:30:34 by hramaros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,20 +95,19 @@ char	*get_next_line(int fd)
 	tmp = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!tmp)
 		return (NULL);
-	bezero(tmp);
+	bezero(tmp, BUFFER_SIZE);
 	if (!lst_ptr || *lst_ptr == NULL)
 	{
 		read(fd, tmp, BUFFER_SIZE);
 		premier = lstnew(tmp);
 		lst_ptr = &(premier);
 	}
-	while (!nl_number((*lst_ptr)->str) && (nl_number(tmp) == 0) && bezero(tmp)
-		&& read(fd, tmp, BUFFER_SIZE) != 0)
+	while (!nl_number((*lst_ptr)->str) && (nl_number(tmp) == 0) && bezero(tmp,
+			BUFFER_SIZE) && read(fd, tmp, BUFFER_SIZE) != 0)
 		lstlast(*lst_ptr)->next = lstnew(tmp);
 	free(tmp);
 	buffer = (char *)malloc(sizeof(char) * (c_count(premier) + 2));
-	buffer[c_count(premier)] = '\0';
-	buffer[c_count(premier) + 1] = '\0';
+	bezero(buffer, c_count(premier) + 1);
 	fullfill(lst_ptr, premier, buffer);
 	return (buffer);
 }
