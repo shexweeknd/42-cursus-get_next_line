@@ -6,7 +6,7 @@
 /*   By: hramaros <hramaros@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 07:23:17 by hramaros          #+#    #+#             */
-/*   Updated: 2024/03/18 08:16:12 by hramaros         ###   ########.fr       */
+/*   Updated: 2024/03/19 03:22:36 by hramaros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,7 @@ static size_t	strlen(const char *s)
 	return (count);
 }
 
-static void	fullfill(t_list **lst_ptr, t_list *premier, char *buffer,
-		int nl_occ)
+static void	fullfill(t_list **lst_ptr, t_list *premier, char *buffer)
 {
 	int		i;
 	int		j;
@@ -66,7 +65,7 @@ static void	fullfill(t_list **lst_ptr, t_list *premier, char *buffer,
 		while (premier->str[j])
 		{
 			buffer[i++] = premier->str[j];
-			if (premier->str[j++] == '\n' && (--nl_occ <= 0))
+			if (premier->str[j++] == '\n')
 				break ;
 		}
 		if (!premier->next)
@@ -87,7 +86,7 @@ static void	fullfill(t_list **lst_ptr, t_list *premier, char *buffer,
 char	*get_next_line(int fd)
 {
 	static t_list	**lst_ptr;
-	t_list			*premier;
+	static t_list	*premier;
 	char			*tmp;
 	char			*buffer;
 
@@ -103,14 +102,15 @@ char	*get_next_line(int fd)
 		premier = lstnew(tmp);
 		lst_ptr = &(premier);
 	}
-	while ((nl_number(tmp) == 0) && bezero(tmp) && read(fd, tmp,
+	while (!nl_number((*lst_ptr)->str) && (nl_number(tmp) == 0) && bezero(tmp) && read(fd, tmp,
 			BUFFER_SIZE) != 0)
 		lstlast(*lst_ptr)->next = lstnew(tmp);
 	free(tmp);
 	buffer = (char *)malloc(sizeof(char) * (c_count(premier) + 2));
 	buffer[c_count(premier)] = '\n';
 	buffer[c_count(premier) + 1] = '\0';
-	fullfill(lst_ptr, premier, buffer, nl_number(lstlast(premier)->str));
+	fullfill(lst_ptr, premier, buffer);
+	// fullfill(lst_ptr, premier, buffer, nl_number(lstlast(premier)->str));
 	return (buffer);
 }
 
