@@ -6,7 +6,7 @@
 /*   By: hramaros <hramaros@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 07:23:17 by hramaros          #+#    #+#             */
-/*   Updated: 2024/03/19 03:22:36 by hramaros         ###   ########.fr       */
+/*   Updated: 2024/03/19 07:24:54 by hramaros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,17 +102,13 @@ char	*get_next_line(int fd)
 		premier = lstnew(tmp);
 		lst_ptr = &(premier);
 	}
-	while (!nl_number((*lst_ptr)->str) && (nl_number(tmp) == 0) && bezero(tmp) && read(fd, tmp,
-			BUFFER_SIZE) != 0)
+	while (!nl_number((*lst_ptr)->str) && (nl_number(tmp) == 0) && bezero(tmp)
+		&& read(fd, tmp, BUFFER_SIZE) != 0)
 		lstlast(*lst_ptr)->next = lstnew(tmp);
 	free(tmp);
 	buffer = (char *)malloc(sizeof(char) * (c_count(premier) + 2));
-	buffer[c_count(premier)] = '\n';
+	buffer[c_count(premier)] = '\0';
 	buffer[c_count(premier) + 1] = '\0';
 	fullfill(lst_ptr, premier, buffer);
-	// fullfill(lst_ptr, premier, buffer, nl_number(lstlast(premier)->str));
 	return (buffer);
 }
-
-// rectifier la taille de tmp a la valeur de retour de read() (tmp[read(...)] = '\0')
-// TODO rectifier erreur : "vao pair de tsy mety ny algo de vao pair vao mety le algo"
