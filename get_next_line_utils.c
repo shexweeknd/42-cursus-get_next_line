@@ -6,32 +6,11 @@
 /*   By: hramaros <hramaros@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:05:14 by hramaros          #+#    #+#             */
-/*   Updated: 2024/03/19 07:31:14 by hramaros         ###   ########.fr       */
+/*   Updated: 2024/03/20 07:28:43 by hramaros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-char	*duplicate(const char *s)
-{
-	char	*ret;
-	int		size;
-
-	size = 0;
-	while (s[size])
-		size++;
-	ret = (char *)malloc(sizeof(char) * (size + 1));
-	if (!ret)
-		return (0);
-	size = 0;
-	while (s[size])
-	{
-		*(ret + size) = s[size];
-		size++;
-	}
-	ret[size] = '\0';
-	return (ret);
-}
 
 int	bezero(char *str, size_t size)
 {
@@ -48,11 +27,24 @@ int	bezero(char *str, size_t size)
 t_list	*lstnew(void *content)
 {
 	t_list	*buffer;
+	int		size;
 
 	buffer = (t_list *)malloc(sizeof(t_list));
 	if (!buffer)
 		return (NULL);
-	buffer->str = duplicate(content);
+	size = 0;
+	while (((char *)content)[size])
+		size++;
+	buffer->str = (char *)malloc(sizeof(char) * (size + 1));
+	if (!buffer->str)
+		return (NULL);
+	size = 0;
+	while (((char *)content)[size])
+	{
+		buffer->str[size] = ((char *)content)[size];
+		size++;
+	}
+	buffer->str[size] = '\0';
 	buffer->next = NULL;
 	return (buffer);
 }
@@ -83,15 +75,18 @@ char	*create_tmp(t_list *lst, int j, size_t size)
 	return (tmp);
 }
 
-void	recurse_free(t_list *addr)
+void	recurse_free(t_list **lst_ptr)
 {
-	free(addr->str);
-	if (!addr->next)
+	free((*lst_ptr)->str);
+	(*lst_ptr)->str = NULL;
+	if (!(*lst_ptr)->next)
 	{
-		free(addr);
+		free(*lst_ptr);
+		*lst_ptr = NULL;
 		return ;
 	}
-	recurse_free(addr->next);
-	addr->next = NULL;
-	free(addr);
+	recurse_free(&(*lst_ptr)->next);
+	(*lst_ptr)->next = NULL;
+	free(*lst_ptr);
+	*lst_ptr = NULL;
 }

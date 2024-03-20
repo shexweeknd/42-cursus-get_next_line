@@ -6,7 +6,7 @@
 /*   By: hramaros <hramaros@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 07:23:17 by hramaros          #+#    #+#             */
-/*   Updated: 2024/03/19 18:20:08 by hramaros         ###   ########.fr       */
+/*   Updated: 2024/03/20 07:21:12 by hramaros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,8 @@ static void	fullfill(t_list **lst_ptr, t_list *premier, char *buffer)
 {
 	int		i;
 	int		j;
-	t_list	*addr;
 	char	*tmp;
 
-	addr = premier;
 	i = 0;
 	while (premier && premier->str)
 	{
@@ -76,11 +74,9 @@ static void	fullfill(t_list **lst_ptr, t_list *premier, char *buffer)
 		tmp = create_tmp(premier, j, strlen(&premier->str[j]));
 	else
 		tmp = "";
-	recurse_free(addr);
+	recurse_free(lst_ptr);
 	if (*tmp)
 		*lst_ptr = lstnew(tmp);
-	else
-		*lst_ptr = NULL;
 }
 
 char	*get_next_line(int fd)
