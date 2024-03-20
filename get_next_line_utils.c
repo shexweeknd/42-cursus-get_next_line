@@ -6,7 +6,7 @@
 /*   By: hramaros <hramaros@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:05:14 by hramaros          #+#    #+#             */
-/*   Updated: 2024/03/20 07:28:43 by hramaros         ###   ########.fr       */
+/*   Updated: 2024/03/20 07:40:44 by hramaros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ char	*create_tmp(t_list *lst, int j, size_t size)
 	char	*tmp;
 	int		i;
 
+	if (!size)
+		return (NULL);
 	tmp = (char *)malloc(sizeof(char) * (size + 1));
 	if (!tmp)
 		return (NULL);

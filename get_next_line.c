@@ -6,7 +6,7 @@
 /*   By: hramaros <hramaros@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 07:23:17 by hramaros          #+#    #+#             */
-/*   Updated: 2024/03/20 07:21:12 by hramaros         ###   ########.fr       */
+/*   Updated: 2024/03/20 07:41:50 by hramaros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,9 @@ static void	fullfill(t_list **lst_ptr, t_list *premier, char *buffer)
 			break ;
 		premier = premier->next;
 	}
-	if (strlen(&premier->str[j]) >= 1)
-		tmp = create_tmp(premier, j, strlen(&premier->str[j]));
-	else
-		tmp = "";
+	tmp = create_tmp(premier, j, strlen(&premier->str[j]));
 	recurse_free(lst_ptr);
-	if (*tmp)
+	if (tmp != NULL)
 		*lst_ptr = lstnew(tmp);
 }
 

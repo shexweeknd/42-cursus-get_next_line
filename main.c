@@ -6,7 +6,7 @@
 /*   By: hramaros <hramaros@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 07:29:54 by hramaros          #+#    #+#             */
-/*   Updated: 2024/03/20 07:31:36 by hramaros         ###   ########.fr       */
+/*   Updated: 2024/03/20 07:49:10 by hramaros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,23 @@
 
 int	main(void)
 {
-	int			fd;
-	char		*buffer;
+	char	*line;
+	int		fd;
+	int		i;
 
 	fd = open("file.txt", O_RDONLY);
-	buffer = get_next_line(fd);
-	printf("%s", buffer);
-	buffer = get_next_line(fd);
-	printf("%s", buffer);
-	buffer = get_next_line(fd);
-	printf("%s", buffer);
-	buffer = get_next_line(fd);
-	printf("%s", buffer);
-	free(buffer);
+	if (!fd)
+		return (1);
+	i = 0;
+	while (i++ < 10000)
+	{
+		line = get_next_line(fd);
+		if (!*line)
+			break ;
+		else
+			printf("%s", line);
+		free(line);
+	}
 	close(fd);
 	return (0);
 }
