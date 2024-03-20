@@ -6,7 +6,7 @@
 /*   By: hramaros <hramaros@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 07:23:17 by hramaros          #+#    #+#             */
-/*   Updated: 2024/03/20 07:41:50 by hramaros         ###   ########.fr       */
+/*   Updated: 2024/03/20 08:33:50 by hramaros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,10 @@ static void	fullfill(t_list **lst_ptr, t_list *premier, char *buffer)
 	tmp = create_tmp(premier, j, strlen(&premier->str[j]));
 	recurse_free(lst_ptr);
 	if (tmp != NULL)
+	{
 		*lst_ptr = lstnew(tmp);
+		free(tmp);
+	}
 }
 
 char	*get_next_line(int fd)

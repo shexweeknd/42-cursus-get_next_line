@@ -6,7 +6,7 @@
 /*   By: hramaros <hramaros@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 07:29:54 by hramaros          #+#    #+#             */
-/*   Updated: 2024/03/20 07:49:10 by hramaros         ###   ########.fr       */
+/*   Updated: 2024/03/20 08:25:43 by hramaros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	main(void)
 	while (i++ < 10000)
 	{
 		line = get_next_line(fd);
-		if (!*line)
+		if (!line)
 			break ;
 		else
 			printf("%s", line);
