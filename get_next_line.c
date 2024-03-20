@@ -6,7 +6,7 @@
 /*   By: hramaros <hramaros@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 07:23:17 by hramaros          #+#    #+#             */
-/*   Updated: 2024/03/20 08:33:50 by hramaros         ###   ########.fr       */
+/*   Updated: 2024/03/20 14:44:25 by hramaros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ char	*get_next_line(int fd)
 	char			*tmp;
 	char			*buffer;
 
-	if (!BUFFER_SIZE)
+	if (!BUFFER_SIZE || (fd < 0))
 		return (NULL);
 	tmp = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!tmp)
@@ -94,7 +94,11 @@ char	*get_next_line(int fd)
 	bezero(tmp, BUFFER_SIZE);
 	if (!lst_ptr || *lst_ptr == NULL)
 	{
-		read(fd, tmp, BUFFER_SIZE);
+		if (!read(fd, tmp, BUFFER_SIZE))
+		{
+			free(tmp);
+			return (NULL);
+		}
 		premier = lstnew(tmp);
 		lst_ptr = &(premier);
 	}

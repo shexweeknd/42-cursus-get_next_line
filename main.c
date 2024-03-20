@@ -6,7 +6,7 @@
 /*   By: hramaros <hramaros@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 07:29:54 by hramaros          #+#    #+#             */
-/*   Updated: 2024/03/20 08:25:43 by hramaros         ###   ########.fr       */
+/*   Updated: 2024/03/20 13:59:37 by hramaros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ int	main(void)
 	int		i;
 
 	fd = open("file.txt", O_RDONLY);
-	if (!fd)
+	printf("============%d============\n", fd);
+	if (!fd || fd < 0)
 		return (1);
 	i = 0;
 	while (i++ < 10000)
