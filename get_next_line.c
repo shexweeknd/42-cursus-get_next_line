@@ -5,109 +5,121 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hramaros <hramaros@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/13 07:23:17 by hramaros          #+#    #+#             */
-/*   Updated: 2024/03/20 14:44:25 by hramaros         ###   ########.fr       */
+/*   Created: 2024/09/29 14:24:42 by hramaros          #+#    #+#             */
+/*   Updated: 2024/10/24 14:10:56 by hramaros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static size_t	c_count(t_list *lst)
+static int	ft_sup_strchr(char *str, char c)
 {
-	size_t	count;
-	size_t	i;
+	int	index;
 
-	count = 0;
-	while (lst)
+	if (!str)
+		return (0);
+	index = 0;
+	while (str[index])
+		if (str[index++] == c)
+			return (1);
+	return (0);
+}
+
+static char	*ft_sup_strjoin(char *remains, char *buffer)
+{
+	char	*result;
+	int		i;
+	int		j;
+
+	if (!remains && !buffer)
+		return (NULL);
+	result = malloc(sizeof(char) * (ft_strlen(remains) + ft_strlen(buffer)
+				+ 1));
+	if (!result)
+		return (NULL);
+	i = 0;
+	j = 0;
+	if (remains)
 	{
-		i = 0;
-		while (lst->str[i] && lst->str[i] != '\n')
-			i++;
-		count += i;
-		lst = lst->next;
+		while (remains[i])
+			result[j++] = remains[i++];
 	}
-	return (count);
+	i = 0;
+	while (buffer[i])
+		result[j++] = buffer[i++];
+	result[ft_strlen(remains) + ft_strlen(buffer)] = '\0';
+	return (free(remains), result);
 }
 
-static int	nl_number(char *str)
+static char	*push_line(char *buffer)
 {
-	int	occur;
+	char	*result;
+	int		i;
 
-	occur = 0;
-	while (*str)
-		if (*str++ == '\n')
-			occur++;
-	return (occur);
+	if (!buffer)
+		return (NULL);
+	i = 0;
+	while (buffer[i] && buffer[i] != '\n')
+		i++;
+	if (buffer[i] == '\n')
+		i++;
+	result = malloc(sizeof(char) * (i + 1));
+	if (!result)
+		return (NULL);
+	i = 0;
+	while (buffer[i] && buffer[i] != '\n')
+	{
+		result[i] = buffer[i];
+		i++;
+	}
+	if (buffer[i] == '\n')
+		return (result[i] = '\n', result[i + 1] = '\0', result);
+	return (result[i] = '\0', result);
 }
 
-static size_t	strlen(const char *s)
-{
-	int	count;
-
-	count = 0;
-	while (s[count])
-		count++;
-	return (count);
-}
-
-static void	fullfill(t_list **lst_ptr, t_list *premier, char *buffer)
+static char	*get_remains(char *remains)
 {
 	int		i;
 	int		j;
-	char	*tmp;
+	char	*result;
 
+	if (!remains)
+		return (NULL);
 	i = 0;
-	while (premier && premier->str)
-	{
-		j = 0;
-		while (premier->str[j])
-		{
-			buffer[i++] = premier->str[j];
-			if (premier->str[j++] == '\n')
-				break ;
-		}
-		if (!premier->next)
-			break ;
-		premier = premier->next;
-	}
-	tmp = create_tmp(premier, j, strlen(&premier->str[j]));
-	recurse_free(lst_ptr);
-	if (tmp != NULL)
-	{
-		*lst_ptr = lstnew(tmp);
-		free(tmp);
-	}
+	while (remains[i] && remains[i] != '\n')
+		i++;
+	if (remains[i] == '\0')
+		return (free(remains), NULL);
+	result = malloc(sizeof(char) * (ft_strlen(&remains[i]) + 1));
+	if (!result)
+		return (NULL);
+	i++;
+	j = 0;
+	while (remains[i])
+		result[j++] = remains[i++];
+	return (result[j] = '\0', free(remains), result);
 }
 
 char	*get_next_line(int fd)
 {
-	static t_list	**lst_ptr;
-	static t_list	*premier;
-	char			*tmp;
-	char			*buffer;
+	static char	*remains;
+	char		*result;
+	char		buffer[BUFFER_SIZE + 1];
+	int			count;
 
-	if (!BUFFER_SIZE || (fd < 0))
+	if (fd < 0 || !BUFFER_SIZE)
 		return (NULL);
-	tmp = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	if (!tmp)
-		return (NULL);
-	bezero(tmp, BUFFER_SIZE);
-	if (!lst_ptr || *lst_ptr == NULL)
+	count = 1;
+	buffer[0] = '\0';
+	while (!ft_sup_strchr(buffer, '\n') && count)
 	{
-		if (!read(fd, tmp, BUFFER_SIZE))
-		{
-			free(tmp);
-			return (NULL);
-		}
-		premier = lstnew(tmp);
-		lst_ptr = &(premier);
+		count = read(fd, buffer, BUFFER_SIZE);
+		buffer[count] = '\0';
+		remains = ft_sup_strjoin(remains, buffer);
 	}
-	while (!nl_number((*lst_ptr)->str) && (nl_number(tmp) == 0) && bezero(tmp,
-			BUFFER_SIZE) && read(fd, tmp, BUFFER_SIZE) != 0)
-		lstlast(*lst_ptr)->next = lstnew(tmp);
-	free(tmp);
-	buffer = (char *)malloc(sizeof(char) * (c_count(premier) + 2));
-	bezero(buffer, c_count(premier) + 1);
-	fullfill(lst_ptr, premier, buffer);
-	return (buffer);
+	result = push_line(remains);
+	remains = get_remains(remains);
+	if (result[0] == '\0')
+		return (free(result), NULL);
+	return (result);
 }

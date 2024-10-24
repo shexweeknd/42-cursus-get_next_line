@@ -1,1 +1,0 @@
-cc -Wall -Wextra -Werror -g -D BUFFER_SIZE=3 *.c && ./a.out | cat -e

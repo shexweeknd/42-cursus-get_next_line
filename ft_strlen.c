@@ -1,38 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hramaros <hramaros@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/13 07:29:54 by hramaros          #+#    #+#             */
-/*   Updated: 2024/03/20 13:59:37 by hramaros         ###   ########.fr       */
+/*   Created: 2024/10/24 14:07:35 by hramaros          #+#    #+#             */
+/*   Updated: 2024/10/24 14:09:02 by hramaros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <fcntl.h>
 
-int	main(void)
+size_t	ft_strlen(const char *str)
 {
-	char	*line;
-	int		fd;
-	int		i;
+	size_t	result;
 
-	fd = open("file.txt", O_RDONLY);
-	printf("============%d============\n", fd);
-	if (!fd || fd < 0)
-		return (1);
-	i = 0;
-	while (i++ < 10000)
-	{
-		line = get_next_line(fd);
-		if (!line)
-			break ;
-		else
-			printf("%s", line);
-		free(line);
-	}
-	close(fd);
-	return (0);
+	result = 0;
+	if (!str)
+		return (result);
+	while (str[result])
+		result++;
+	return (result);
 }
